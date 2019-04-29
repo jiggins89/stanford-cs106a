@@ -1,0 +1,249 @@
+/*
+* File: Breakout.java
+* -------------------
+* This file implements the game of Breakout.
+*/
+import acm.graphics.*;
+import acm.program.*;
+import acm.util.*;
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Breakout extends GraphicsProgram {
+
+	// Constants
+	
+	/** Width and height of application window in pixels */
+	public static final int APPLICATION_WIDTH = 600;
+	public static final int APPLICATION_HEIGHT = 800;
+
+	/** Dimensions of game board (usually the same) */
+	private static final int WIDTH = APPLICATION_WIDTH;
+	private static final int HEIGHT = APPLICATION_HEIGHT;
+
+	/** Dimensions of the paddle */
+	private static final int PADDLE_WIDTH = 60;
+	private static final int PADDLE_HEIGHT = 10;
+
+	/** Offset of the paddle up from the bottom */
+	private static final int PADDLE_Y_OFFSET = 130;
+	
+	/** Number of bricks per row */
+	private static final int NBRICKS_PER_ROW = 10;
+	
+	/** Number of rows of bricks */
+	private static final int NBRICK_ROWS = 10;
+	
+	/** Separation between bricks */
+	private static final int BRICK_SEP = 4;
+
+	/** Width of a brick */
+	private static final int BRICK_WIDTH = (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW;
+
+	/** Height of a brick */
+	private static final int BRICK_HEIGHT = 8;
+	
+	/** Radius of the ball in pixels */
+	private static final int BALL_RADIUS = 6;
+
+	/** Offset of the top brick row from the top */
+	private static final int BRICK_Y_OFFSET = 70;
+
+	/** Number of turns */
+	private static final int NTURNS = 3;
+	
+	/** Animation cycle delay */
+	private static final int DELAY = 10;
+
+	//--------------------------------------------------------------------------------------------------//
+	
+	// runs the program
+	public void run() {
+		setup();
+		
+		// plays the game
+		while (ballCollision == false){
+		moveBall();
+			
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------//
+	
+	// Private methods
+	
+	/** Sets up the game and add mouse listeners*/
+	private void setup() {
+		addBrick();
+		addPaddle();
+		addBall();
+		addMouseListeners();
+	}
+	
+	/** Adds the bricks at the top of the window */
+	private void addBrick(){
+		// Counts the number of rows of bricks
+		for (int i = 0; i < NBRICK_ROWS; i++){
+			// Counts the number of columns of bricks
+			for (int j = 0; j < NBRICKS_PER_ROW; j++){
+				int x = (j*BRICK_WIDTH) + (j*BRICK_SEP);
+				int y = (i*BRICK_HEIGHT) + (i*BRICK_SEP) + BRICK_Y_OFFSET;
+				
+				// Create a new brick and set if to be filled
+				brick = new GRect (x, y, BRICK_WIDTH, BRICK_HEIGHT);
+				brick.setFilled (true);
+				
+				//Sets the color of the brick based on the location of the 'y' coordinate 
+				if (y < ((BRICK_HEIGHT + BRICK_SEP)*2 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.RED);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*4 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.ORANGE);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*6 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.YELLOW);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*8 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.GREEN);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*10 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.CYAN);
+				}
+				add (brick);
+			}
+		}
+	}
+	
+	/** This section adds the paddle */
+	private void addPaddle(){
+		lastX = (getWidth()/2)-(PADDLE_WIDTH/2);
+		paddle = new GRect (lastX,(getHeight() - PADDLE_Y_OFFSET),PADDLE_WIDTH,PADDLE_HEIGHT);
+		paddle.setFilled (true);
+		add (paddle);
+	}
+	
+	/** This section adds the ball */
+	private void addBall(){
+	ball = new GOval ((getWidth()/2)-BALL_RADIUS,(getHeight()/3)-BALL_RADIUS,(2*BALL_RADIUS),(2*BALL_RADIUS));
+	ball.setFilled (true);
+	add (ball);
+	}
+
+	/** moves the ball around the screen */
+	private void moveBall(){
+		/* set the initial velocities for the ball -- 
+		 * the 'x' velocity is random to avoid the same path being taken by the ball each time the game runs
+		 * which should add to the fun...... hopefully  */
+		vx = rgen.nextDouble(1.0, 3.0);
+		if (rgen.nextBoolean(0.5)) vx = -vx;
+		vy = 3;
+		
+		// moves the ball while it is on the screen
+		while(ballCollision == false){
+			if (ball.getX() > 0 && ball.getX() < (WIDTH-(2*BALL_RADIUS)) && ball.getY() > 0 && ball.getY() <= HEIGHT-(4*BALL_RADIUS)){
+				ball.move(vx,vy);
+				checkForCollisions();
+			}
+			pause (DELAY);	
+		}
+	}
+	
+	/** checks for collisions with the walls or the bricks
+	 *  if there is a collision with a wall the ball will bounce off it in the opposite direction
+	 *  if a brick is hit the ball will bounce away the same as the wall but the brick will disappear */
+	private void checkForCollisions(){
+		collideWithWall();
+		collideWithBrick(); 
+	}
+	
+	private void collideWithWall(){		
+		// changes the direction of the ball if the top is hit
+		if (ball.getY()<= 0||ball.getY()> HEIGHT-(4*BALL_RADIUS)){
+			vy = vy*(-1);
+			ball.move(vx,vy);	
+		
+		// changes the direction if the side walls are hit
+		}else if (ball.getX()<= 0 || ball.getX()>= WIDTH -(2*BALL_RADIUS)){
+			vx = vx*(-1);
+			ball.move(vx,vy);
+		}
+	}
+	
+	private void collideWithBrick(){
+		GObject collObj = getElementAt(ball.getX()+(BALL_RADIUS*2), ball.getY()); 
+		if (collObj == paddle) { 
+			vy = vy*(-1);
+		}else if (collObj == brick) {
+			remove(brick); 
+			vy = vy*(-1);
+		}
+	}
+	
+
+
+
+	
+	/** Creates a mouse listener to move the paddle */
+	public void mouseMoved (MouseEvent e){
+		if (e.getX() + PADDLE_WIDTH <= WIDTH){
+			paddle.move (e.getX() - lastX,0);
+			lastX = e.getX();
+		}
+	}
+	
+	/** determines if the game is over -- 
+	 *  true if the ball falls off the bottom of the screen more than NTURNS or all the bricks are destroyed */
+	private void gameOver(){
+		
+	}
+	
+	//--------------------------------------------------------------------------------------------------//
+	
+	// instance variables
+
+	// this is the 
+	private GRect brick;												
+	
+	// this is the paddle that the ball bounces off
+	private GRect paddle;												
+	
+	// this is the ball for the game
+	private GOval ball;													
+	
+	// the last mouse X posistion
+	private double lastX; 												
+	
+	// movement speed of the ball in the 'x' and 'y' direction
+	private double vx,vy;												
+	
+	// checks if the ball is in play and
+	private boolean ballCollision = false;											 
+	
+	// moves the ball in random 'x' direction
+	private RandomGenerator rgen = RandomGenerator.getInstance();		
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

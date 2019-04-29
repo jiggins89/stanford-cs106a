@@ -1,0 +1,27 @@
+package chapter4;
+/*
+ * File: KgToLbConverter.java
+ * ------------------------------------
+ * This program reads weight in kilogrammes
+ * and converts it to pounds and ounces.
+ */
+
+import acm.program.*;
+
+public class KgToLbConverter extends ConsoleProgram{
+	
+	public void run(){
+		println ("This Program converts Kilograms to Pounds and Ounces.");
+		double kg = readDouble("Enter weight in Kg:");
+		int lbs =  (int) (kg * POUNDS_IN_A_KILOGRAMME);
+		/* this part calculates the remainder in decimal form,
+		 * converts it to pounds and then casts it to an integer.
+		 */
+		double remainder = kg % POUNDS_IN_A_KILOGRAMME;
+		println ("Remainder="+remainder);
+
+	}
+	
+	private static final double POUNDS_IN_A_KILOGRAMME = 2.2; 
+	private static final double OUNCES_IN_A_POUND = 16; 
+}

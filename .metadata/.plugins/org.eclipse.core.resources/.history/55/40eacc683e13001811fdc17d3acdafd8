@@ -1,0 +1,32 @@
+/*
+ * File: ProgramHierarchy.java
+ * Name: 
+ * Section Leader: 
+ * ---------------------------
+ * This file is the starter file for the ProgramHierarchy problem.
+ */
+
+import acm.graphics.*;
+import acm.program.*;
+import java.awt.*;
+
+public class ProgramHierarchy extends GraphicsProgram {
+	
+	private static final double BOX_WIDTH = 200;
+	private static final double BOX_HEIGHT = 50;
+	
+	public void run() {
+		
+		// find centre of scree
+		int cx = getWidth()/2;
+		int cy = getHeight()/2;
+		
+		GRect box = new GRect(BOX_WIDTH,BOX_HEIGHT);
+		
+		// add top box
+		add (box, (cx-BOX_WIDTH/2),(cy-BOX_HEIGHT*2));
+		
+
+		}
+	}
+}

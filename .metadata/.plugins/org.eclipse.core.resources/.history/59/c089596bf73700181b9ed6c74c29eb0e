@@ -1,0 +1,138 @@
+/*
+* File: Breakout.java
+* -------------------
+* This file implements the game of Breakout.
+*/
+import acm.graphics.*;
+import acm.program.*;
+import acm.util.*;
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Breakout extends GraphicsProgram {
+
+	/** Width and height of application window in pixels */
+	public static final int APPLICATION_WIDTH = 600;
+	public static final int APPLICATION_HEIGHT = 800;
+
+	/** Dimensions of game board (usually the same) */
+	private static final int WIDTH = APPLICATION_WIDTH;
+	private static final int HEIGHT = APPLICATION_HEIGHT;
+
+	/** Dimensions of the paddle */
+	private static final int PADDLE_WIDTH = 60;
+	private static final int PADDLE_HEIGHT = 10;
+
+	/** Offset of the paddle up from the bottom */
+	private static final int PADDLE_Y_OFFSET = 230;
+	
+	/** Number of bricks per row */
+	private static final int NBRICKS_PER_ROW = 10;
+	
+	/** Number of rows of bricks */
+	private static final int NBRICK_ROWS = 10;
+	
+	/** Separation between bricks */
+	private static final int BRICK_SEP = 4;
+
+	/** Width of a brick */
+	private static final int BRICK_WIDTH = (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW;
+
+	/** Height of a brick */
+	private static final int BRICK_HEIGHT = 8;
+	
+	/** Radius of the ball in pixels */
+	private static final int BALL_RADIUS = 10;
+
+	/** Offset of the top brick row from the top */
+	private static final int BRICK_Y_OFFSET = 70;
+
+	/** Number of turns */
+	private static final int NTURNS = 3;
+	
+	/** Animation cycle delay */
+	private static final int DELAY = 10;
+
+	public void run() {
+		setup();
+	
+	}
+	/** Create and place all the bricks at the top of window. */
+	private void setup() {
+		// Counts the number of rows
+		for (int i = 0; i < NBRICK_ROWS; i++){
+			// Counts the number of columns
+			for (int j = 0; j < NBRICKS_PER_ROW; j++){
+				int x = (j*BRICK_WIDTH) + (j*BRICK_SEP);
+				int y = (i*BRICK_HEIGHT) + (i*BRICK_SEP) + BRICK_Y_OFFSET;
+				// Create a new brick and set if to be filled
+				GRect brick = new GRect (x, y, BRICK_WIDTH, BRICK_HEIGHT);
+				brick.setFilled(true);
+				//Sets the color of the brick based on the location of the 'y' coordinate 
+				if (y < ((BRICK_HEIGHT + BRICK_SEP)*2 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.RED);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*4 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.ORANGE);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*6 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.YELLOW);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*8 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.GREEN);
+				}else if (y < ((BRICK_HEIGHT + BRICK_SEP)*10 + BRICK_Y_OFFSET)){
+					brick.setColor(Color.CYAN);
+				}
+				add (brick);
+			}
+		}
+		// add the paddle
+		lastX = (getWidth()/2)-(PADDLE_WIDTH/2);
+		paddle = new GRect (lastX,(getHeight() - PADDLE_Y_OFFSET),PADDLE_WIDTH,PADDLE_HEIGHT);
+		paddle.setFilled (true);
+		add (paddle);
+		addMouseListeners();
+		
+		// add the ball
+		ball = new GOval ((getWidth()/2)-(BALL_RADIUS/2),(getHeight()/2)-(BALL_RADIUS/2),BALL_RADIUS,BALL_RADIUS);
+	}
+		
+	/** Creates a mouse listener to move the paddle */
+	public void mouseMoved (MouseEvent e){
+		if (e.getX() + PADDLE_WIDTH <= WIDTH){
+			paddle.move (e.getX() - lastX,0);
+			lastX = e.getX();
+		}
+	}
+	
+	// instance variables
+	private GRect paddle;				// this is the paddle that the ball bounces off
+	private GOval ball;					// this is the ball for the game
+	private double lastX; 				// the last mouse X posistion
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

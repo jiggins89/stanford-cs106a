@@ -1,0 +1,30 @@
+/*
+ * File: Target.java
+ * Name: 
+ * Section Leader: 
+ * -----------------
+ * This file is the starter file for the Target problem.
+ */
+
+import acm.graphics.*;
+import acm.program.*;
+import java.awt.*;
+
+public class Target extends GraphicsProgram {
+
+	private static final int inch = 72;
+
+	public void run() {
+		// find centre of the window
+		int x = getWidth()/2;
+		int y = getHeight()/2;
+		// calculate radii of circles
+		int circleR1 = inch;
+		int circleR2 = inch/100*65;
+		int circleR3 = inch/100*30;
+		
+		GOval circle1 = new GOval((x-circleR1),(y-circleR1),circleR1,circleR1);
+		circle1.setFilled(true);
+		add (circle1);
+	}
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.pde.ui.EquinoxLauncher">
+<booleanAttribute key="automaticValidate" value="false"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="configLocation" value=""/>
+<booleanAttribute key="default_auto_start" value="true"/>
+<intAttribute key="default_start_level" value="4"/>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<booleanAttribute key="clearConfig" value="false"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-console"/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
+<booleanAttribute key="automaticAdd" value="true"/>
+</launchConfiguration>

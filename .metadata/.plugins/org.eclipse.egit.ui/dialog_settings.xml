@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="2" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
+	<list key="EGit.KnownHosts">
+		<item value="git.eclipse.org"/>
+		<item value="bitbucket.org"/>
+		<item value="github.com"/>
+	</list>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://github.com/jiggins89/cs106a.git"/>
+		<item value="file:///C:\Users\John\git\Stanford-CS-106A"/>
+		<item value="https://github.com/jiggins89/Stanford-CS-106A.git"/>
+	</list>
+	<section name="GitImportWizard">
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="C:\Users\John\OneDrive\Programming\.git">
+			<item value="empty"/>
+		</list>
+		<list key="C:\Users\John\git\cs106a\.git">
+			<item value="empty"/>
+		</list>
+		<list key="C:\Users\John\Documents\GitHub\cs106a\.git">
+			<item value="empty"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item value="500,500" key="STAGING_SASH_FORM_WEIGHT"/>
+		<item value="false" key="sortItemState"/>
+		<item value="500,500" key="HORIZONTAL_SASH_FORM_WEIGHT"/>
+	</section>
+</section>

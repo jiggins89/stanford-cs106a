@@ -1,0 +1,17 @@
+/*
+ * File: DrawSnowman.java
+ * -----------------------
+ * This program draws a simple diagram of a snowman
+ * It places the snowman in a particular position as 
+ * defined by a coordinates.
+ */
+
+import acm.graphics.*;
+import acm.program.*;
+
+public class DrawSnowman extends GraphicsProgram {
+	public void run() {
+		add (new GOval(150, 100, 100, 100));
+	}
+	
+}

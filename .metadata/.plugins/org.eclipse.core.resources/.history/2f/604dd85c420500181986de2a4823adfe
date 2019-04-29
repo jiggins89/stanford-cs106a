@@ -1,0 +1,24 @@
+package chapter4;
+/*
+ * File: KgToLbConverter.java
+ * ------------------------------------
+ * This program reads a user input of kilogrammes
+ * and converts them to pounds and ounces
+ */
+
+import acm.program.*;
+
+public class KgToLbConverter extends ConsoleProgram{
+	
+	public void run(){
+		println ("This Program converts Kilograms to Pounds and Ounces.");
+		double kg = readDouble("Enter weight in Kg:");
+		int lb =  (int) (kg * POUNDS_IN_A_KILOGRAMME);
+		double R = kg % POUNDS_IN_A_KILOGRAMME;
+		int Oz = (int) ((R/10) * OUNCES_IN_A_POUND);
+		println (lb+"lbs"+Oz+"Oz");
+	}
+	
+	private static final double POUNDS_IN_A_KILOGRAMME = 2.2; 
+	private static final double OUNCES_IN_A_POUND = 16; 
+}

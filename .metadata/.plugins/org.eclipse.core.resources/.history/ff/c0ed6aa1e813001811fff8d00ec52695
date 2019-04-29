@@ -1,0 +1,56 @@
+/*
+ * File: ProgramHierarchy.java
+ * Name: 
+ * Section Leader: 
+ * ---------------------------
+ * This file is the starter file for the ProgramHierarchy problem.
+ */
+
+import acm.graphics.*;
+import acm.program.*;
+import java.awt.*;
+
+public class ProgramHierarchy extends GraphicsProgram {
+	
+	private static final double BOX_WIDTH = 200;
+	private static final double BOX_HEIGHT = 50;
+
+	
+	public void run() {
+		
+		// find centre of window
+		double cx = getWidth()/2;
+		double cy = getHeight()/2;
+		
+		// add top box
+		add (new GRect((cx-BOX_WIDTH/2),(cy-BOX_HEIGHT*2),BOX_WIDTH,BOX_HEIGHT));
+		
+		// add bottom 3 boxes 
+		for (double i = cx-(BOX_WIDTH*1.7);  i < cx + (BOX_WIDTH*1.7); i += (BOX_WIDTH*1.2) ){
+			double x = i;
+			double y = cy; 
+			add (new GRect(x,y,BOX_WIDTH,BOX_HEIGHT));
+		}	
+		/* add lines between boxes
+		 * fine starting point for all 3 lines on the base of the top box
+		 * starting 'x' coorindate is the same as the centre od screen coordiante
+		 */
+		double ly = cy-BOX_HEIGHT;
+		add (new GLine(cx,ly,cx-(BOX_WIDTH*1.2),cy));
+		add (new GLine(cx,ly,cx,cy));
+		add (new GLine(cx,ly,cx+(BOX_WIDTH*1.2),cy));	
+		
+		// add the labels to the boxes
+		
+		// add the top label 'program'
+		GLabel program = new GLabel ("Program");
+		program.setFont("Arial-50");
+		// find coordiantes to centre label in boxes adn add label
+		double px = cx -(program.getWidth()/2);
+		double py = cy-BOX_HEIGHT-((BOX_HEIGHT-program.getAscent())/2);
+		add (program,px,py);
+		
+		
+	
+	}
+}
